@@ -17,7 +17,7 @@ function App() {
 
 
      </BrowserRouter>
-     <div>hello hershit</div>
+     <div>hello</div>
 
     </>
   )
