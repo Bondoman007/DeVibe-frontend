@@ -1,9 +1,9 @@
 import React from "react";
-import Img from "./icon.png"
-import { Router } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
-import { Route } from "react-router-dom";
+import Img from "../../public/icon.png"
+import { useSelector } from "react-redux";
+
 export default function NavBar (){
+  const user = useSelector((store)=>store.user)
     return <div className="navbar bg-base-300">
     {/* Left Section with Logo */}
     <div className="flex-1">
@@ -20,8 +20,8 @@ export default function NavBar (){
     </div>
 
     {/* Right Section with Avatar and Dropdown */}
-    <div className="flex-none gap-2">
-      <div className="form-control"></div>
+    {user && <div className="flex-none gap-2">
+      <div className="form-control"> Welcome, {user.firstName}</div>
       <div className="dropdown dropdown-end mx-5">
         <div
           tabIndex={0}
@@ -30,8 +30,8 @@ export default function NavBar (){
         >
           <div className="w-10 rounded-full">
             <img
-              alt="Tailwind CSS Navbar component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              alt="user photo"
+              src={user.photoUrl}
             />
           </div>
         </div>
@@ -53,6 +53,6 @@ export default function NavBar (){
           </li>
         </ul>
       </div>
-    </div>
+    </div>}
   </div>
 }
