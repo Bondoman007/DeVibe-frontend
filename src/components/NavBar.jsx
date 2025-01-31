@@ -1,13 +1,38 @@
 import React from "react";
 import Img from "../../public/icon.png"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 export default function NavBar (){
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const user = useSelector((store)=>store.user)
+
+  async function handleLogout() {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/logout",
+        {}, // Empty object instead of sending credentials in body
+        { withCredentials: true }
+      );
+      console.log(res.data);
+
+      // Clear user state in Redux
+      dispatch(removeUser());
+
+      // Navigate to login page after logout
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  }
     return <div className="navbar bg-base-300">
     {/* Left Section with Logo */}
     <div className="flex-1">
-      <a className="btn btn-ghost text-xl flex items-center ">
+      <Link to={"/"} className="btn btn-ghost text-xl flex items-center ">
         {/* Logo Image */}
         <img
           src={Img}
@@ -16,7 +41,7 @@ export default function NavBar (){
         />
         {/* Brand Name */}
        
-      </a>
+      </ Link>
     </div>
 
     {/* Right Section with Avatar and Dropdown */}
@@ -40,16 +65,16 @@ export default function NavBar (){
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
         >
           <li>
-            <a className="justify-between">
+            <Link to={"/profile"} className="justify-between">
               Profile
               <span className="badge">New</span>
-            </a>
+            </Link>
           </li>
           <li>
             <a>Settings</a>
           </li>
           <li>
-            <a>Logout</a>
+            <button onClick={handleLogout}>Logout</button>
           </li>
         </ul>
       </div>
