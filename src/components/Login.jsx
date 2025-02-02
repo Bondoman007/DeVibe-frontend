@@ -1,52 +1,88 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
-export default function Login(){
-    const [emailId,setEmailId] = useState("hunt@gmail.com")
-    const [password,setPassword] = useState("Hunt@123")
-    const dispatch = useDispatch()
-    const navigate = useNavigate("/")
-    async function handleLogin (){
-     try{
-        const res = await axios.post(BASE_URL + "/login",{
-            emailId,
-            password,
-          },{
-            withCredentials:true,
-          })
-         dispatch(addUser(res.data))
-          navigate("/")
-     }catch(err){
-        console.log(err)    
-     }
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((store) => store.user);
+
+  const [emailId, setEmailId] = useState("kanishk@gmail.com");
+  const [password, setPassword] = useState("Kanishk@123");
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
     }
-    return <div className="flex justify-center my-10">
-                <div className="card bg-base-300 w-96 shadow-xl flex justify-center">
-               
-            <div className="card-body text-center">
-            <p className="text-xl">Login</p>
-            <div>
-               <label className="input input-bordered flex items-center gap-2 my-4">
-                Email
-                <input type="text" value={emailId} className="grow" placeholder="example@gmail.com" 
-                onChange={(e)=>{setEmailId(e.target.value)}}
-                />
-                </label>
-                <label className="input input-bordered flex items-center gap-2">
-                password
-                <input type="text" value={password} className="grow" placeholder="password" 
-                 onChange={(e)=>{setPassword(e.target.value)}}
-                />
-                </label>
-            </div>
-           
-            <div className="card-actions justify-end my-2">
-                <button onClick={handleLogin} className="btn btn-primary">Login</button>
-            </div>
-            </div>
+  }, [user, navigate]);
+  async function handleLogin() {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/login",
+        {
+          emailId,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(addUser(res.data));
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  return (
+    <div className="flex justify-center my-10">
+      <div className="card bg-base-300 w-96 shadow-xl flex justify-center">
+        <div className="card-body text-center">
+          <p className="text-xl">Login</p>
+          <div>
+            <label className="input input-bordered flex items-center gap-2 my-4">
+              Email
+              <input
+                type="text"
+                value={emailId}
+                className="grow"
+                placeholder="example@gmail.com"
+                onChange={(e) => {
+                  setEmailId(e.target.value);
+                }}
+              />
+            </label>
+            <label className="input input-bordered flex items-center gap-2">
+              password
+              <input
+                type="text"
+                value={password}
+                className="grow"
+                placeholder="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+            </label>
+          </div>
+
+          <div className="card-actions flex justify-between items-center w-full my-2">
+            <Link
+              to={"/signup"}
+              className="text-xs text-[#c3c3c3] mx-2 hover:text-[#8892b0] transition-colors"
+            >
+              New to DeVibe? Sign up here
+            </Link>
+            <button onClick={handleLogin} className="btn bg-[#23293c]">
+              Login
+            </button>
+          </div>
         </div>
-</div>
+      </div>
+    </div>
+  );
 }

@@ -89,7 +89,14 @@ export default function NavBar() {
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to={"/request"} className="justify-between">
+                  request
+                </Link>
+              </li>
+              <li>
+                <Link to={"/connections"} className="justify-between">
+                  connections
+                </Link>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>
