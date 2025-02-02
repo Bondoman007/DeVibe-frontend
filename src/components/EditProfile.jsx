@@ -230,11 +230,11 @@ function EditProfile({ userState }) {
                   onKeyPress={(e) => e.key === "Enter" && handleSkillAdd()}
                   placeholder="Add a skills up to 6"
                   maxLength={10}
+                  disabled={profile.skills.length > 6}
                   className="block px-2 py-2 w-full rounded-md bg-[#232427] border-[#233554] text-[#e6f1ff] shadow-sm focus:border-[#64ffda] focus:ring focus:ring-[#64ffda] focus:ring-opacity-50 sm:text-sm"
                 />
                 <button
                   type="button"
-                  disabled={profile.skills > 6}
                   onClick={handleSkillAdd}
                   className="inline-flex items-center px-4 py-2 border border-[#64ffda] text-sm font-medium rounded-md shadow-sm text-[#64ffda] bg-[#1b2d4d] hover:bg-[#233554] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#64ffda] focus:ring-offset-[#0a192f]"
                 >

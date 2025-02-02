@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 export default function SignUp() {
   const [gender, setGender] = useState("");
   const [emailId, setEmailId] = useState("");
@@ -10,6 +12,7 @@ export default function SignUp() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate("/");
+  const dispatch = useDispatch();
   const handleSignUp = async () => {
     try {
       const res = await axios.post(
@@ -25,8 +28,9 @@ export default function SignUp() {
           withCredentials: true,
         }
       );
-      if (res.data === "user saved") {
-        return navigate("/login");
+      dispatch(addUser(res.data?.data));
+      if (res.data?.message === "signup done!") {
+        navigate("/profile");
       }
     } catch (err) {
       console.log(err);

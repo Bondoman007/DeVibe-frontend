@@ -77,7 +77,10 @@ export default function Login() {
             >
               New to DeVibe? Sign up here
             </Link>
-            <button onClick={handleLogin} className="btn bg-[#23293c]">
+            <button
+              onClick={handleLogin}
+              className="btn hover:bg-black bg-[#1f3a92]"
+            >
               Login
             </button>
           </div>
