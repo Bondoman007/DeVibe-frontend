@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Img from "../../public/icon.png";
+import Img from "/icon.png";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-
+  const [requestNotification, setRequestsNotification] = useState([]);
   const [profile, setProfile] = useState(user);
   // useEffect(()=>{
   //   setProfile(user)
@@ -30,6 +30,7 @@ export default function NavBar() {
   useEffect(() => {
     fetchUser();
   }, []);
+
   async function handleLogout() {
     try {
       const res = await axios.post(
@@ -65,18 +66,24 @@ export default function NavBar() {
       </div>
 
       {/* Right Section with Avatar and Dropdown */}
-      {user && (
+      {user && requestNotification && (
         <div className="flex-none gap-2">
           <div className="form-control"> Welcome, {user.firstName}</div>
-          <div className="dropdown dropdown-end mx-5">
+          <div className="dropdown dropdown-end mx-5 relative">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="btn btn-ghost btn-circle avatar flex justify-center"
+              // onClick={setFlag(!flag)}
             >
-              <div className="w-10 rounded-full">
+              <div className="w-10 rounded-full relative">
                 <img alt="user photo" src={user.photoUrl} />
               </div>
+              {/* {requestNotification?.length > 0 && (
+                <span className="badge bg-red-700 absolute -top-1 -right-1 text-white text-xs px-2">
+                  {requestNotification.length}
+                </span>
+              )} */}
             </div>
             <ul
               tabIndex={0}
@@ -85,17 +92,21 @@ export default function NavBar() {
               <li>
                 <Link to={"/profile"} className="justify-between">
                   Profile
-                  <span className="badge">New</span>
                 </Link>
               </li>
               <li>
                 <Link to={"/request"} className="justify-between">
-                  request
+                  Request
+                  {/* {requestNotification.length > 0 && (
+                    <span className="badge bg-red-700">
+                      {requestNotification.length}
+                    </span>
+                  )} */}
                 </Link>
               </li>
               <li>
                 <Link to={"/connections"} className="justify-between">
-                  connections
+                  Connections
                 </Link>
               </li>
               <li>
