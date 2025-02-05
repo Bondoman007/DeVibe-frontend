@@ -12,8 +12,8 @@ export default function Login() {
 
   const user = useSelector((store) => store.user);
 
-  const [emailId, setEmailId] = useState("kanishk@gmail.com");
-  const [password, setPassword] = useState("Kanishk@123");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -59,7 +59,7 @@ export default function Login() {
             <label className="input input-bordered flex items-center gap-2">
               password
               <input
-                type="text"
+                type="password"
                 value={password}
                 className="grow"
                 placeholder="password"
