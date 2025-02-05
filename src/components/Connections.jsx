@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Users, Loader2, UserX, MessageSquare } from "lucide-react";
 import { BASE_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 function Connections() {
   const [connections, setConnections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchConnections();
   }, []);
-
+  const handleFeedButton = () => {
+    navigate("/");
+  };
   const fetchConnections = async () => {
     try {
       const response = await axios.get(BASE_URL + "/user/connections", {
@@ -51,6 +54,25 @@ function Connections() {
   if (connections.length === 0) {
     return (
       <div className="min-h-[400px] flex flex-col items-center justify-center text-[#8892b0]">
+        <button
+          onClick={handleFeedButton}
+          className="btn btn-outline text-[#64ffda] flex items-center my-3 mx-2"
+        >
+          <svg
+            class="h-6 w-6 text-[#64ffda]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Feed
+        </button>
         <Users className="w-16 h-16 mb-4 text-[#64ffda]" />
         <h3 className="text-xl font-semibold mb-2">No Connections Yet</h3>
         <p>Start connecting with other users to grow your network!</p>
@@ -61,11 +83,31 @@ function Connections() {
   return (
     connections && (
       <div className="bg-[#20252c] rounded-xl shadow-xl overflow-hidden ">
+        <button
+          onClick={handleFeedButton}
+          className="btn btn-outline text-[#64ffda] flex items-center my-3 mx-2"
+        >
+          <svg
+            class="h-6 w-6 text-[#64ffda]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Feed
+        </button>
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-[#e6f1ff]">
               My Connections
             </h2>
+
             <span className="px-3 py-1 bg-[#1b2d4d] rounded-full text-[#64ffda] text-sm">
               {connections.length}{" "}
               {connections.length === 1 ? "Connection" : "Connections"}

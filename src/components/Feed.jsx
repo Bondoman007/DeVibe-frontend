@@ -8,6 +8,7 @@ import { UserPlus, UserX } from "lucide-react";
 
 export default function Feed() {
   const feed = useSelector((store) => store.feed);
+  const [toast, setToast] = useState(false);
   console.log(feed);
   const dispatch = useDispatch();
 
@@ -20,6 +21,10 @@ export default function Feed() {
       });
 
       dispatch(addFeed(res?.data?.data));
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 5000);
     } catch (err) {
       console.error("Error fetching feed:", err);
     }
@@ -64,6 +69,13 @@ export default function Feed() {
 
   return (
     <div className="min-h-screen ">
+      {toast && (
+        <div className="toast toast-center top-0">
+          <div className="alert alert-info">
+            <span>Tap on your profile for more options!</span>
+          </div>
+        </div>
+      )}
       <div className="max-w-md mx-auto pt-10  px-4">
         {/* Card Stack */}
         <div className="relative h-[500px] w-full">
@@ -86,6 +98,9 @@ export default function Feed() {
 
         {/* Action Buttons */}
       </div>
+      <p className="text-center mt-10 text-[#64ffda] opacity-70">
+        Swipe! left to reject or right to accept
+      </p>
     </div>
   );
 }

@@ -14,6 +14,7 @@ function EditProfile({ userState }) {
   const [skillInput, setSkillInput] = useState(userState.skills || []);
   const [isLoading, setIsLoading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(userState.photoUrl || "");
+  const [toast, setToast] = useState(false);
   const navigate = useNavigate();
   if (!profile) return;
   useEffect(() => {
@@ -50,7 +51,9 @@ function EditProfile({ userState }) {
       }
     }
   };
-
+  const handleFeedButton = () => {
+    navigate("/");
+  };
   const handleSkillAdd = () => {
     if (skillInput.trim() && !profile.skills.includes(skillInput.trim())) {
       setProfile((prev) => ({
@@ -87,6 +90,10 @@ function EditProfile({ userState }) {
       );
       dispatch(addUser(response.data?.data));
       setProfile(response.data?.data);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 5000);
       setIsLoading(false);
       // navigate("/");
     } catch (error) {
@@ -97,6 +104,25 @@ function EditProfile({ userState }) {
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+      <button
+        onClick={handleFeedButton}
+        className="btn btn-outline text-[#64ffda] flex items-center"
+      >
+        <svg
+          class="h-6 w-6 text-[#64ffda]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Feed
+      </button>
       <form className="max-w-2xl mx-auto bg-[#141414] rounded-2xl shadow-xl overflow-hidden ">
         <div className="p-8">
           <div className="text-center mb-8">
@@ -263,6 +289,13 @@ function EditProfile({ userState }) {
           </div>
         </div>
       </form>
+      {toast && (
+        <div className="toast toast-center top-0">
+          <div className="alert alert-success">
+            <span>saved successfully!</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
