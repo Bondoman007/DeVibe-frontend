@@ -9,12 +9,12 @@ import { UserPlus, UserX } from "lucide-react";
 export default function Feed() {
   const feed = useSelector((store) => store.feed);
   const [toast, setToast] = useState(false);
-  console.log(feed);
+
   const dispatch = useDispatch();
 
   const getFeed = async () => {
     if (feed?.length) return;
-    console.log("lll");
+
     try {
       const res = await axios.get(BASE_URL + "/user/feed", {
         withCredentials: true,
@@ -39,7 +39,6 @@ export default function Feed() {
   const handleSwipe = async (direction) => {
     try {
       const status = direction === "right" ? "interested" : "ignored";
-      console.log(status);
 
       await axios.post(
         BASE_URL + `/request/send/${status}/${feed[0]._id}`,

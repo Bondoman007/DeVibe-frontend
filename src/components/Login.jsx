@@ -14,7 +14,7 @@ export default function Login() {
 
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState();
   useEffect(() => {
     if (user) {
       navigate("/");
@@ -35,6 +35,7 @@ export default function Login() {
       dispatch(addUser(res.data));
       navigate("/");
     } catch (err) {
+      setError(err);
       console.log(err);
     }
   }
@@ -84,6 +85,7 @@ export default function Login() {
               Login
             </button>
           </div>
+          {error && <p className="text-red-600">{error.response?.data}</p>}
         </div>
       </div>
     </div>
