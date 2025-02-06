@@ -12,6 +12,7 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState();
   const navigate = useNavigate("/");
   const dispatch = useDispatch();
   const handleSignUp = async () => {
@@ -34,6 +35,7 @@ export default function SignUp() {
         navigate("/profile");
       }
     } catch (err) {
+      setError(err);
       console.log(err);
     }
   };
@@ -137,6 +139,7 @@ export default function SignUp() {
               Sign Up
             </button>
           </div>
+          {error && <p className="text-red-600">{error.response?.data}</p>}
         </div>
       </div>
     </div>
