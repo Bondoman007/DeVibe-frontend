@@ -10,6 +10,8 @@ import Feed from "./components/Feed";
 import SignUp from "./components/SignUp";
 import Request from "./components/Request";
 import Connections from "./components/Connections";
+import Chat from "./components/Chat";
+import Messages from "./components/Messages";
 function App() {
   return (
     <>
@@ -22,6 +24,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/request" element={<Request />} />
+              <Route path="/chat" element={<Messages />} />
               <Route path="/connections" element={<Connections />} />
             </Route>
           </Routes>

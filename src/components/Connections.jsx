@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Users, Loader2, UserX, MessageSquare } from "lucide-react";
+import { Users, Loader2, UserX, MessageSquare, Link } from "lucide-react";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addConnection } from "../utils/connectionSlice";
 
 function Connections() {
   const [connections, setConnections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
   useEffect(() => {
     fetchConnections();
   }, []);
@@ -21,7 +25,7 @@ function Connections() {
         withCredentials: true,
       });
       setConnections(response.data?.data);
-      console.log(response.data?.data);
+
       setError(null);
     } catch (error) {
       console.error("Error fetching connections:", error);
@@ -59,15 +63,15 @@ function Connections() {
           className="btn btn-outline text-[#64ffda] flex items-center my-3 mx-2"
         >
           <svg
-            class="h-6 w-6 text-[#64ffda]"
+            className="h-6 w-6 text-[#64ffda]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M15 19l-7-7 7-7"
             />
           </svg>
@@ -88,15 +92,15 @@ function Connections() {
           className="btn btn-outline text-[#64ffda] flex items-center my-3 mx-2"
         >
           <svg
-            class="h-6 w-6 text-[#64ffda]"
+            className="h-6 w-6 text-[#64ffda]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M15 19l-7-7 7-7"
             />
           </svg>
@@ -148,11 +152,17 @@ function Connections() {
                     Connected{" "}
                     {new Date(connection.createdAt).toLocaleDateString()}
                   </span>
+
                   <button
-                    onClick={() =>
-                      (window.location.href = `/messages/${connection.id}`)
-                    }
                     className="p-2 rounded-full text-[#64ffda] hover:bg-[#233554] transition-colors"
+                    onClick={() => {
+                      localStorage.setItem(
+                        "selectedConnection",
+                        JSON.stringify(connection)
+                      );
+
+                      navigate("/chat");
+                    }}
                   >
                     <MessageSquare className="w-5 h-5" />
                   </button>

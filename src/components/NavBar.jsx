@@ -38,7 +38,6 @@ export default function NavBar() {
         {}, // Empty object instead of sending credentials in body
         { withCredentials: true }
       );
-      console.log(res.data);
 
       // Clear user state in Redux
       dispatch(removeUser());
