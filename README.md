@@ -14,7 +14,7 @@ DeVibe is a developer-centric matching platform inspired by Tinder, allowing dev
 - React.js
 - Redux for state management
 - TailwindCSS for styling
-- Firebase authentication
+- JWT auth
 
 ### Backend (DeVibe-backend)
 - Node.js with Express.js
@@ -62,14 +62,7 @@ npm install
 npm start
 ```
 
-## 🔥 API Endpoints (Backend)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | User login |
-| GET | `/api/users` | Fetch all developers |
-| POST | `/api/connections/send` | Send connection request |
-| POST | `/api/connections/respond` | Accept/Reject request |
+
 
 ## 🎯 Challenges Faced
 - Designing a **secure authentication system** with JWT.
