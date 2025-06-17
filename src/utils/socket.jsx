@@ -6,7 +6,7 @@ export const creatSocketConnection = () => {
     return io(BASE_URL);
   } else {
     return io("/", {
-      path: "/api/socket.io",
+      path: "/https://devibe-backend.onrender.com/socket.io",
     });
   }
 };
