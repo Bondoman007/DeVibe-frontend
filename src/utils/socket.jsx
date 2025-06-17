@@ -1,12 +1,11 @@
 import io from "socket.io-client";
-import { BASE_URL } from "./constants";
 
-export const creatSocketConnection = () => {
+export const createSocketConnection = () => {
   if (location.hostname === "localhost") {
-    return io(BASE_URL);
+    return io("http://localhost:5000"); // assuming dev server
   } else {
-    return io("/", {
-      path: "/https://devibe-backend.onrender.com/socket.io",
+    return io("https://devibe-backend.onrender.com", {
+      path: "/socket.io", // default socket.io path; change only if backend uses a custom path
     });
   }
 };
