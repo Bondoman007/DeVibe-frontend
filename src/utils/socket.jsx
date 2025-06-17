@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 
-export const createSocketConnection = () => {
+export const creatSocketConnection = () => {
   if (location.hostname === "localhost") {
     return io("http://localhost:3000"); // assuming dev server
   } else {
